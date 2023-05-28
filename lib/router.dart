@@ -26,14 +26,15 @@ class IucRouter extends $IucRouter implements AutoRouteGuard {
     final goingToLogin = LoginRoute.page.name == resolver.route.name;
 
     log(authState.name);
-
-    log('Nav to: ${resolver.route.name}');
-    log('isLoggedOut: $isLoggedOut');
+    // This log should show up any time the user navigates OR the Auth Provider
+    // notifies its listeners.
+    log('Global Nav Guard was called');
 
     if (isLoggedIn || goingToLogin) {
       resolver.next();
     } else {
       push(const LoginRoute());
+      resolver.next(false);
     }
   }
 

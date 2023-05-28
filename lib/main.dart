@@ -37,20 +37,28 @@ class _MainAppState extends State<MainApp> {
         ),
       ],
       child: MaterialApp.router(
-        routerConfig: iucRouter.config(),
+        routerConfig: iucRouter.config(reevaluateListenable: authProvider),
         builder: (context, child) => Consumer<AuthProvider>(
           builder: (context, value, c) {
             final authState = value.authenticationState;
             final isLoading = value.isLoading ||
                 authState == AuthenticationState.authenticating;
 
-            return AnimatedSwitcher(
-              duration: const Duration(seconds: 1),
-              child: isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : child,
+            return Stack(
+              // duration: const Duration(seconds: 1),
+              fit: StackFit.expand,
+              children: [
+                child!,
+                if (isLoading)
+                  Container(
+                    color: Colors.white,
+                    child: const SizedBox.expand(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+              ],
             );
           },
         ),

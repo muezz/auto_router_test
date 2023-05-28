@@ -36,6 +36,15 @@ class HomePage extends StatelessWidget {
                   },
                   child: const Text('Log Out'),
                 ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await authProvider.signOut();
+                  },
+                  child: const Text('Log Out without navigating'),
+                ),
+                const Text(
+                  'Clicking this should, in theory, trigger the nav guard.',
+                ),
               ],
             ),
           ),
