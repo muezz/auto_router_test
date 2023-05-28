@@ -28,7 +28,7 @@ class AuthProvider with ChangeNotifier {
     final currentUser = await getUser();
 
     if (currentUser != null) {
-      user = UserModel();
+      user = currentUser;
       authenticationState = AuthenticationState.loggedIn;
     } else {
       authenticationState = AuthenticationState.loggedOut;
@@ -42,11 +42,11 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> getUser() async {
+  Future<UserModel?> getUser() async {
     await Future.delayed(const Duration(seconds: 1));
     final random = m.Random();
     if (random.nextBool()) {
-      return 'Random String';
+      return UserModel();
     } else {
       return null;
     }
